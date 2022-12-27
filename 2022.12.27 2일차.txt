@@ -1,0 +1,112 @@
+리눅스 2일차
+
+vi 네가지 모드
+
+1. nomal mod : 기본 상태, 명령어 입력 가능
+
+명령어
+gg : 첫줄 이동
+G : 마지막 줄 이동
+n G / :n  : n번째 줄로 이동 
+dd : 한 행 잘라내기 ex) 10 dd - 10줄 삭제
+x : 한 글자 잘라내기
+yy : 복사하기
+p : 아랫줄에 붙여넣기 ex) 5 p - 5번 반복 붙여넣기
+P : 커서 라인에 붙여넣기
+u : 되돌리기
+n dw : 커서위치로 부터 n번째 단어까지 잘라내기
+~ : 대,소문자 변경
+J : 밑에줄과 합치기
+j : 밑에줄 커서 이동
+k : 윗 줄 커서 이동
+l : 오른쪽 커서 이동
+h : 왼쪽 커서 이동
+sp : 행2개로 창 분리
+vs : 열2개로 창 분리
+
+2. insert mod : 콘솔창에 입력할 때 사용
+
+명령어
+입력 모드
+A : 맨 뒤부터 입력
+I : 맨 앞부터 입력
+O : 윗 줄부터 입력
+cc : 한줄 지우고 바로 입력
+
+- ex mod : 실행모드, : 뒤에 오는 명령어를 통해 사용
+
+명령어
+:w - write, 저장 의미
+:q - quit, 파일을 벗어남
+:wq /:x - 저장하고 파일을 벗어남
+:set nu
+	 ai
+	 ts=4
+	 등등
+:w k2 - 다른 이름으로 저장
+:20, 50 w k3 - 20줄~50줄 k3로 저장
+
+- visual mod : 그래픽 인터페이스 사용, 일반적인 파일 창처럼 사용 가능(마우스 이용)
+
+명령어
+:set mouse=a - 마우스 사용 설정
+:set mouse=r - 마우스 사용 설정 해제
+ctrl+v - 블록 지정(행)
+shift+v - 블록지정(열)
+
+
+Shell이란?
+- 사용자들이 내리는 명령어들을 해석하여 기계어로 번역한 다음 운영체제인 kernel에게 전달해 주는 역할
+- 관련 명령어
+echo $SHELL : 현재 쉘
+env : 환경변수
+enable : 내부 명령어 보기
+history : 사용한 명령어 내역 확인
+alias a='b' : 명령어 커스텀
+
+-관련 파일
+~/.bash_profile : user의 master 설정 파일
+~/.bashrc : user의 보조 설정 파일 -> 여기서 세션 종료 후에도 alias 사용 가능
+~/.vimrc : vi 에디터의 기본적인 설정 가능 ex) set nu, set title 등등
+
+파일 분류
+
+- 리눅스 운영체제는 모든 것을 파일로 인식하고 처리한다.
+- 확장자를 보고 파일의 종류 판별 가능
+/ : directory
+nothing : file
+@ : soft link
+* : executeable
+= : socket
+| : named pipe
+
+- 파일의 종류
+1. Text : 에디터로 열 수 있는 파일
+2. binary : CPU가 인식할 수 있는 파일
+3. Direactory : 파일의 한 종류 쉽게 폴더라고 생각
+4. 장치 파일
+   - Block 형 : USB, HDD 등 하드웨어 장치
+   - Char 형 : Printer, System I/O버퍼 등 
+   
+- 링크 파일 : 파일 복사와 다른 의미
+  - Hard Link : 공유의 개념으로 C++의 reference 변수, 파일만 링크 가능, 동일 파일 시스템에서만 가능
+  명령어 : ln a lna
+  - Soft Link : 원본 파일에 대한 위치정보만 가짐, symbolic link, 파일,디렉토리 모두 가능, 다른 파일 시스템도 가능
+  명령어 : ln -s a lna
+
+압축, 압축 풀기
+
+- 자주 사용하는 압축 툴
+1. gzip - gunzip
+2. compress - uncompress
+3. bzip - bunzip
+4. xz - unxz
+
+- 묶는 명령어 : tar
+  - tar 사용법
+  tar c(create)f(file)z(gzip) (설정할 압축파일 이름).tar.gz (압축할 파일)
+  tar x(export)f(file)z(gzip) (설정할 압축파일 이름).tar.gz
+  z -> J 로 바뀌면 xz 압축툴 사용
+  
+**꿀팁**
+tap : 자동완성
