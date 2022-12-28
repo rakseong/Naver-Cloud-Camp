@@ -1,0 +1,101 @@
+리눅스 3일차
+
+용량의 범위
+
+8bit = 1byte = 2^8 범위 데이터 처리
+32bit = 4byte = 2^32 " = 약 42억
+64bit = 8byte = 2^64 " = 약 188경
+1024byte = 1KB
+
+패키지 관련 명령어
+
+dpkg -l | grep <p-n> : 패키지 이름으로 패키지 목록 확인
+apt list --installed | grep <p-n> : 위 명령어랑 같음
+apt remove <p-n> : 패키지 삭제
+apt install <p-n> : 패키지 설치
+apt show <p-n> : 패키지 정보 확인
+
+
+우분투 설치
+
+Virtual Box 관리자 -> 새로 만들기 -> 서버 이름 UbuntuEx -> 메모리 크기 할당 -> default 값들로 수행
+-> 파일 위치 및 크기 할당(50G) -> 설정 -> 저장소 / 컨트롤러:IDE ubuntu 드라이버 할당
+-> 네트워크 / 고급 - 포트 포워딩 -> USB 사용 x -> 시작 -> install Ubuntu Server
+-> 나머지 default -> Custom storage layout -> 파티션 용량 배분 -> default 값 설정
+
+설치 후 확인 작업
+
+ping -c3 8.8.8.8 : 핑 테스트
+df -h : 전체 파티션 용량 및 사용량
+du -sh /etc : etc디렉토리(파티션)의 용량 확인
+hostname : 서버 이름
+dpkg -l | nl : 패키지 넘버링한 상태로 출력
+dpkg -l | wc -l : 패키지 개수 출력 
+nl /etc/passwd : 계정 넘버링한 상태로 출력
+id : 현재 아이디
+sudo useradd -m -d /home/id id : 멤버 추가
+sudo passwd id : id의 비밀번호 설정
+sudo ufw disable/enable : 방화벽 비활성/활성
+sudo service ufw start/stop/restart/status : 방화벽 조작 명령어
+sudo service ssh  start/stop/restart/status : ssh 조작 명령어
+sudo service httpd start/stop/restart/status : httpd 조작 명령어
+dpkg -l | grep apache2 : 패키지 중 apache2 포함된 패키지 출력
+sudo apt install apache2 : apache2 설치
+dpkg -l | grep apache2 : 패키지 설치 확인
+
+root 계정으로 전환
+
+1. sudo -i
+2. su -
+
+한글 locale 설정
+
+1. sudo apt -y install language-pack-ko
+2. sudo locale-gen ko_KR.UTF-8
+
+프로세스 관련 명령어
+
+ps -ef : 전체 프로세스 정보
+ps -ef | grep http : 실행중인 ps 중 http가 존재하면 검색
+kill : 프로세스 강제 종료
+
+하드디스크의 분류
+
+hda, hdb, hdc ... : 각 파티션으로 분리된 하드디스크
+sda, sdb, sdc ... : 각 파티션으로 분리된 하드디스크 but 속도가 더 빠름(SSD)
+
+mount 명령
+- mount는 물리적인 저장 공간과 directory를 연결하는 것을 의미
+mount -l/fdisk -l: 현재 마운트 정보 확인
+df -h / fdisk -l : 파티션 정보
+명령어 형식 : mount <directory> <장치명>
+
+리눅스 부팅 원리
+1. Power ON : 전력이 들어옴.
+2. ROM-BIOS : 컴퓨터에 내장된 펌웨어가 장치 검사 시작
+3. 부트 매니저(GRUB) : 하드디스크 0번에 존재하며 운영체제를 탐색함
+4. 커널 로드 : 운영체제를 메모리에 할당
+5. 파일 시스템 : 운영체제가 시스템 점검
+6. 파일 시스템 마운트 : 운영체제가 시스템 마운트
+7. 시스템 reboot
+8. 로그인
+
+커널의 기능
+- 메모리 관리
+- 프로세스 관리
+- 파일시스템 관리
+- 디바이스 관리
+- 네트워크 관리 ...
+
+사용자 관리(root 계정 활용)
+
+/etc/passwd : 계정에 대한 종합정보를 담고 있음
+/etc/default/useradd : 계정 생성에 대한 기본 설정 정보
+ex) 
+useradd -m -d /home/id id : 멤버 추가 / 홈 디렉토리에 id라는 디렉토리생성 및 id에게 권한 부여
+passwd id : id의 비밀번호 설정
+
+**중요**
+linux 설치 - 원본은 보관
+pakage설치, 기본 설정 -> 보관
+-> 백업
