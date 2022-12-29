@@ -1,0 +1,248 @@
+
+초기 상태
+//생성한 아이디로 로그인
+//root 변경 후 사용(권장x) - 변경 방법 : su - or sudo -i
+
+#whoami -> 루트로 로그인 확인 //이하 #생략
+
+script Linux-Set ->
+
+//명령어 커스텀---------------------------------------------------
+
+alias ai='apt -y install'
+alias h='history'
+alias c='clear'
+alias lh='ls -Alh'
+
+vi ~/.bash_aliases -> 세션 종료 후에도 사용할 커스텀 명령어 저장
+********************
+
+alias ai='apt -y install'
+alias h='history'
+alias c='clear'
+alias lh='ls -Alh'
+
+:wq
+********************
+
+//초기 설정---------------------------------------------------
+
+date -> 현재 날짜, 시간(EN기준으로 되어있음)
+timedatectl set-timezone Asia/Seoul -> date 시간 한국시간으로 설정
+date
+
+cal -> 캘린더 출력(초기에 깔려있지 않음)
+ai ncal
+cal
+
+ai language-pack-ko gcc g++ default-jdk apache2 mysql-server tomcat9 sqlite sendmail mailutils tree lynx glibc-doc mandoc rdate quota //미리 설치 걸어 놓기
+locale -> 언어 설정 확인
+nl /etc/default/locale -> 언어 설정된 파일 확인
+
+vi /etc/default/locale
+********************
+#LANG=en_EN.UTF-8 -> 이곳은 주석처리
+LANG=ko_KR.UTF-8
+
+:wq
+********************
+
+update-locale LANG=ko_KR.UTF-8 -> 설치된 언어 파일 update
+locale -> 변경 안될 시 새로운 터미널에서 확인
+cd /adasdasd -> 오류메세지로 한글 출력 확인
+. ~/.profile -> 다시 로그인한 효과
+
+vi ~/.vimrc -> vi 간단 설정
+********************
+se nu ai ci si ts=4 sw=4 ruler title showmatch 
+syntax on
+hi comment ctermfg=red
+
+:wq
+********************
+
+cp .vimrc /etc/skel/ -> 사용자가 만들어질 때마다 vimrc복사
+
+//사용자 추가---------------------------------------------------
+
+useradd -D -> useradd했을 때 default값
+useradd -D -s /bin/bash -> useradd했을 때 default값 변경
+
+vi /etc/login.defs
+********************
+약 13줄 공백 줄(없으면 만들기)
+
+CREATE_HOME yes //유저 생성 시 자동으로 home에 디렉토리 생성
+
+:wq
+********************
+
+useradd ace -> 위 CREATE_HOME 설정 없을 시 useradd -m -d /home/ace ace 
+passwd ace -> ace의 비밀번호 설정
+ls /home/ -> ace디렉토리 생성 확인
+nl /etc/passwd -> ace계정 확인
+
+hostname
+df -h -> 디스크 정보 확인
+
+//group 사용---------------------------------------------------
+
+groupadd NC -> NC라는 group 생성
+useradd nc1 -G NC -> nc1사용자를 추가하고 NC그룹에 추가
+useradd nc2 -G NC
+useradd nc3 -G NC
+useradd nc4 -G NC
+useradd nc5 -G NC
+passwd nc1 -> nc1의 비밀번호 설정
+passwd nc2
+passwd nc3
+passwd nc4
+passwd nc5
+
+nl /etc/passwd
+nl /etc/group -> 생성된 그룹 확인
+
+//C언어, C++, JAVA 코딩 및 컴파일 해보기---------------------------------------------------
+mkdir dd
+cd dd
+
+vi a.c
+********************
+//41페이지 참고 코딩
+
+:wq
+********************
+
+gcc a.c -> a.out파일 생성
+./a.out
+
+gcc a.c -o a -> -o는 output file의미
+
+echo $PATH -> 경로 확인
+PATH =$PATH:. -> 경로에 자신을 추가하여 './'생략 가능
+a.out
+a
+
+vi b.c++
+********************
+//41페이지 참고 코딩
+
+:wq
+********************
+
+g++ b.cpp -o b 
+./b
+
+vi j.java
+********************
+//41페이지 참고 코딩
+
+:wq
+********************
+
+javac j.java
+java j
+
+//mysql 사용---------------------------------------------------
+
+service mysql start
+mysql -> 비밀번호 없이 바로 mysql에 루트계정으로 접속
+select user(); -> 루트계정인지 확인
+
+//215쪽
+use mysql -> 마스터db인 mysql사용(root계정으로 제어)
+alter user 'root'@'localhost' identified by 'jj'; -> root의 비밀번호를 'jj' 설정
+create user myace@localhost identified by 'a'; -> myace 계정을 생성하고 비밀번호 'a'로 설정
+grant all privileges on acedb.* to myace@localhost; -> myace에게 acedb에 관한 모든 권한을 준다
+flush privileges -> 변경된 내용들을 DB에 적용하는 명령어
+
+//새로운 터미널 & ace로 로그인 진행
+
+mysql -u myace -p
+비밀번호 입력: 1
+
+select user()
+
+use mysql -> 루트가 아니기 때문에 마스터db접근 불가
+
+show databases; -> 데이터베이스 목록 조회
+
+create database acedb; -> acedb 데이터베이스 생성
+use acedb; -> acedb 제어 시작
+
+//sql문
+create table A(su int); 
+insert into A values(40);
+insert into A values(30);
+
+flush privileges
+
+quit
+
+//다시 루트 계정의 터미널로
+
+service apache2 start
+
+cd /var/www/html
+nl index.html -> index.html 파일 확인
+mv index.html old.html -> index.html이름을 old.html로 변경
+
+vi index.html
+********************
+<meta charset='utf-8'>
+<body bgcolor='black' text='white'>
+안녕하세요 반갑습니다.
+
+:wq
+********************
+
+// quota 동작해보기---------------------------------------------------
+quota -> quota:용량 제한,동작x
+repquota -a -> 동작x (quota 실행 안했음.)
+
+vi /etc/fstab
+********************
+약 12줄 맨 오른쪽 부분 
+/home ext4 defaluts 0 1
+
+수정
+
+/home ext4 defaults,usrquota 0 1
+
+:wq
+********************
+
+mount -o remount /home -> 
+quotaon -avug -> quota 켜보기
+quotaoff -avug -> quota 꺼보기
+quotacheck -avugm -> quota 상태 체크
+ls /home/ -> aquota.user 만들어졌으면 정상
+quotaon -avug 
+repquota -a -> quota내용 확인
+
+edquota -u nc1 -> nc1의 용량 제한
+********************
+soft 5000
+hard 6000 
+
+저장 -> ctl+x -> enter
+********************
+
+repquota -a
+
+edquota -p nc1 nc2 nc3 -> n1을 n2,n3에게 복사 
+
+repquota -a
+
+//nc1 로그인
+quota
+
+cp -r /etc -> /etc용량이 제한된 용량 초과
+du -sh ~ -> 5.9M로 한정됨
+
+//nc5 로그인
+
+quota
+
+cp -r /etc -> 정상적으로 카피
+du -sh ~ -> 복사됨
