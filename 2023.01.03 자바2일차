@@ -1,0 +1,89 @@
+자바 2일차
+
+용어 정리
+
+SDK(software development kit) : 소프트웨어 개발 키트, 응용 프로그램을 만들 수 있게 해주는 개발 도구의 집합
+javac : java compiler
+cmd : command
+path : 경로
+CSV(comma-separated values) : 몇 가지 필드를 쉼표 또는 다양한 형태로 구분지어 놓은 텍스트 파일
+IDE(Integrated development Environment) : 통합개발환경, 개발에 관련된 모든 작업을 하나의 프로그램 안에서
+처리하는 환경을 제공하는 소프트웨어
+ANSI(American National Standards Instute) : 문자를 코딩으로 표현, ASCII코드
+UTF-8(Universal coded character set + Trasformation + Format -8bit)
+: 가변 길이 유니코드 인코딩
+syntax : 구문, 문법, 구조 등
+snake convention : 프로그래밍 파일, 변수, 함수 등 대상에 언더바로 표기하여 구분하는 네이밍 컨벤션
+camel convention : 프로그래밍 파일, 변수, 함수 등 대상의 중요 단어의 첫글자를 대문자로 표기
+variable : 변수
+variable declaration : 변수 선언
+variable Assignment : 값의 대입
+keyword : 예약어, 프로그래밍 언어에서 미리 정의된 의미있는 단어
+Identifier(ID) : 프로그래머가 직접 만들어 줘야 하는 이유
+static : 정적인
+dynamic : 동적인
+data type : 자료형
+byte code : 쇼스코드를 컴파일하여 생성되는 class 파일
+Interpreter : byte 코드를 해석하여 기계어로 만들어서 실행시키는 기기
+primitive data type : 기본 자료형, int float boolean 등 최소 단위의 자료형, 값만 가짐
+reference data type : 클래스의 객체를 참조, String, Integer 등
+implicit casting : 묵시적 형변환, 자료의 범위가 좁은 자료형에서 넓은 자료형으로의 변환(시스템이 자동으로 변환)
+explicit casting : 명시적 형변환, 넓은 범위의 자료형에서 좁은 범위의 자료형으로 강제 형변환
+
+
+
+**jdk 설치부터 개발환경, 실행환경 만들기
+1. 환경변수 설정
+
+> 내 PC - 속성 > 고급 시스템 설정 > 환경 변수 > 시스템 변수(컴퓨터 전체에 통용되는 변수)
+1. JAVA_HOME -> programfiles\java\jdk 연결 
+(일반적으로 자바 개발자들이 쓰는 방식)
+2. 실행 파일들 연결(PATH) -> %JAVA_HOME%\bin 연결 
+(%변수명% => 변수명 값 참조)
+
+**자바 사용 시 주의사항 및 약속사항
+
+1. 클래스 이름과 파일 이름 동일해야 함.
+2. 대소문자 구별
+3. 실행 시 main 메서드 필요
+4. SOP(~); -> Console 출력
+5. Hello.java 컴파일 후 Hello.class 생성
+
+**Console창에서 compile 
+
+1. FileName 과 ClassName을 같도록 설정
+2. Compile
+  1) file 저장, directory 이동 후 c:\work>javac Hello.java
+  2) c:\work>dir class파일 생성 확인
+3. 실행 : c:\work>java Hello
+
+**Hi.java
+
+1.args에 인자를 주는 방법
+- c:\work>javac Hi.java
+- c:\work>java Hi 홍길동 1111 2222
+-> args[0] : "홍길동", args[1] = "1111", args[2] = "2222"
+
+2. 문자에서 + 를 이용해 문자열에 append 하여 출력 가능.
+
+**PrimitiveTest.java
+
+1. 자료형은 각각의 할당된 자원만큼의 범위를 가진다.(ex) byte -> -128 ~ 127)
+2. 기본적으로 입력되거나 계산되는 정수형은 int형을 default 값으로 가진다.
+3. print는 출력 후 줄 변경 x, println은 출력 후 줄 변경
+
+**CalculationTest.java
+
+1. 변수의 선언과 대입은 동시에 가능하다.
+2. 연산자를 이용해 계산이 가능하다(+, -, / , ...)
+3. 연산은 우선순위에 따라 순차적으로 이루어진다.
+4. 대입연산자를 사용해 간소화할 수 있다.(c += 10)
+
+**CastingTest.java
+
+1. 큰 자료형에서 작은 자료형으로 형변환이 이루어질려면 명시적 형변환(explicit casting)으로 
+강제적으로 진행해야 한다.
+2. 단 손실되는 자원으로 쓰레기 값이 발생할 수 있다.
+3. 작은 자료형에서 큰 자료형으로 넘어가면 시스템에서 자동으로 형변환을 해주는데 이름 묵시적 형변환
+(implicit casting)이라고 한다.
+4. 정수형의 변수, 계산의 default는 int형, 실수형의 변수, 계산의 default는 double형이다.
