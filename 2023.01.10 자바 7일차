@@ -1,0 +1,42 @@
+자바 7일차
+
+용어 정리 및 수업 내용=====================================================================================================
+
+package : 현재 class의 위치, 다른 패키지의 위치를 참조할 때 참조 값으로 사용
+import : 다른 패키지에 있는 class를 사용하기 위해 import '패키지위치'를 통해 사용
+garbage : 선언된 후 참조되지 않는 메모리에 적재된 사용하지 않는 공간
+garbage collector : JRE에서 참조되지 않는 garbage를 자동으로 처리하는 역할을 수행하며 메모리에 적재된 것을 적절히 해제하는 작업을 수행한다.
+null : 아무것도 참조하지 않음을 나타냄
+mutable : 가변, 어떠한 값의 변화를 적재된 메모리를 통해 적용
+immutable : 불변, 어떠한 값의 변화가 일어나면 메모리 자체에 접근하여 변경을 수행하지 않음.(해당하는 메모리와의 연결을 끊고 변경된 값이 메모리에 적재되어 그 메모리와의 연결을 생성)
+
+**abstract
+class, method에 사용되며 추상 메서드로 선언된 메소드는 반드시 Overriding을 통해 사용해야 한다.(method Overriding 을 사용하여 Polymorphism을 지원한다.)
+method가 abstract로 선언되면 해당 클래스는 abstract으로 선언해 줘야하며 그 이유는 해당 클래스를 직접 인스턴스로 만들어 사용하게 될 시 추상 메소드에 접근하여 사용하는 실수가
+발생할 수 있기 때문에 class도 추상화 한다.
+
+**Interface(pure abstract class, 모든 메서드가 abstract로 선언된 형태)
+Interface에서 선언된 모든 메서드는 abstract메서드이며 implements를 이용해 Interface의 내용을 구체화하여 사용할 수 있는 환경을 제공해준다.
+implements를 이용해 선언하고, 내부에서 오버라이딩하여 사용 가능.
+Field 선언시 public final static(앞에 내용이 없더라도 생략되어있을 뿐), Method 선언시 public abstract(Field와 마찬가지로 생략되어있을 뿐)
+
+**객체지향 개념 복습 및 UML
+Generalization : 자식이 부모를 상속받으며 조금 더 일반화 된 내용을 가지게 되며 이를 일반화라고 한다.
+class A extends B 의 형태로 사용되며 UML은 A -> B(A가 B보다 위에서 표기)이다.
+
+Realization : implement를 사용해 추상화된 메서드들을 현재 클래스에서 재정의하고 사용할 수 있도록 하는 것으로 추상화된 메서드를 구체적으로 실체화한다는 개념이다.
+class A implements C 의 형태로 사용되며 UML은 A --> B(A가 B보다 위에서 표기)이다.
+
+Dependency : 메서드에서 다른 클래스의 메서드를 사용하기 위해 인스턴스를 생성하고 메서드가 끝나면 인스턴스를 해제하는 형태로 얕은 관계를 가진다.
+class의 method안에 A a = new A()를 선언하여 사용한다. UML은 A --> B(A와 B를 일자로 표기)이다.
+
+Assositation : 필드에 인스턴스를 선언하여 메서드 내부에서 쉽게 사용할 수 있도록 미리 선언하는 방식으로 메서드의 종료와 상관없이 계속해서 인스턴스의 클래스와 관계를 유지한다.
+class의 Field안에 A a = new A()를 선언하여 사용한다. UML은 A -> B(A와 B를 일자로 표기)이다.
+
+**equals method
+'=='을 사용할 시 변수에 저장된 값을 비교하지만 reference변수의 경우 값이 같아도 가르키는 메모리 위치가 다르기 때문에 false가 나올수 밖에 없다.
+그렇기에 reference변수의 상태 정보(Field 값)을 비교하기 위해 equlas라는 매서드를 사용한다.
+
+**Object class
+Object클래스는 모든 클래스의 최상위 클래스이다. 그래서 모든 클래스가 만들어질 때 Object클래스를 상속받게되며 이는 생략되어 보이지 않는다.
+Object에 정의된 메서드들(toString(), equlas)는 모든 상황을 통제하도록 만들어지지 않아서 사용하기 위해서는 class에서 Overrinding하는 과정이 필ㅇ하다.
