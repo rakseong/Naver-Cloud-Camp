@@ -1,0 +1,59 @@
+자바 7일차
+
+용어 정리 및 수업 내용=====================================================================================================
+
+parsing : 어떤 일정한 문법을 토대로 나열된 데이터를 가공하기 쉬운 상태로 바꾸는 것( ex)CSV를 기준으로 문자열을 나누는 작업)
+
+throw : 예외를 발생시키는 keyword, throw new Exception의 형태로 사용, 보통 throw로 예외를 발생시키고 throws를 통해 예외처리를 넘기는게 일반적
+유효성 검사를 exception을 활용해 사용할 수 있다.
+
+Inner member class : A class안에 B class를 선언하는 형태로 B클래스는 상속, 실체화, 의존, has a 관계를 가질 수 없다. 클래스 내부에서 B클래스를 인스턴스 생성없이
+직접 참조 가능하다. 표기법 - A$B.class
+
+Inner Local class : A class의 메소드 안에 B class를 선언하여 사용하는 것으로 메소드안에 지역변수처럼 취급하며 사용한다.
+표기법 - A$1B.class
+
+Inner anonymous class : 클래스의 이름을 생략하고 사용하는 방법으로 일시적으로 한 번 사용하고 버리고, 재사용하지 않는다.
+표기법 - %1.class(이름이 없고 넘버링만, 유령 클래스라고도 불림)
+사용법 - new public class B extends A{~~~} => new A(){~~~} 클래스의 이름 축약, B의 인스턴스를 생성하고 있는 모양.
+
+synchronized : multi-thread에 동기화를 제어하는 경우에 사용되는 keyword로 공유자원에 차례로 접근할 수 있도록 동기화 작업 필요
+
+AWT(Abstract Window Toolkit) : 윈도우에서 GUI프로그래밍을 위한 도구, Java로 구현하지 않고 O/S의 컴포넌트를 그대로 사용(O/S에 종속)
+
+process : 컴퓨터에서 실행되는 컴퓨터 프로그램. 여러 개의 프로세서를 사용하는 것을 멀티프로세싱, 스케줄링 작업으로서 표현되기도
+
+Block : API를 호출한 쓰레드가 API의 호출한 작업이 끝날때 까지 다른 동작을 하지 않고 해당 작업에만 신경쓰도록 하는 것.
+IOblock을 통해 단방향의 통신을 유지하도록 한다. 
+
+**char의 사용
+char는 아스키코드에서 숫자로 처리되어 char에 숫자를 더하여 연산하는 행위가 가능하다.
+ex) char c1 = '9';
+int i1 = c1 - '0'; // 57 - 48 = 9
+
+**InputStream, OutputStream
+데이터를 받아들이는 행동을 추상화한 클래스가 InputStream, 데이터를 출력하는 행동을 추상화한 클래스가 OutputStream
+byte단위로 데이터를 읽고 쓰는 행위를 하며 주로 파일, 이미지 등을 다룰때 사용된다. 각각 Input, Output을 사용하는 클래스들의
+최상위 메서드 역할을 한다.
+
+**Reader, Writer
+InputStream, OutputStream과 동작은 유사하지만 문자 단위로 데이터를 읽고 쓰는 행위를 한다. 즉 byte단위로 문자를 읽으면
+깨질수 있는 위험이 존재하는데 이를 방지하기 위해 Reader, Writer가 등장하였다. 
+
+**InputStreamReader, OutputStreamWriter
+각각 Reader, Writer을 상속받고 있으며, 생성자의 인자 값을 InputStream, OutputStream으로 받아 두 클래스의 API를 모두 활용할 수 있도록
+설계한 내용이다. 
+==> InputStreamReader isr = new InputStreamReader(InputStream in)
+==> Reader isr = new InputStreamReader(InputStream in) - 다형성에 의해 가능
+
+**Java io의 특징
+1. 단방향 model : 입력과 출력을 분리하여 한방향으로 진행된다는 특징을 가진다.
+2. FIFO : 제일 먼저 입력된 값은 버퍼에 FIFO형태로 
+3. IOBlock : 단방향 통신을 유지하도록 Input이 발생할 때 Output이 간섭하지 못하도록 막는 작업을 말한다.
+4. 
+
+**StreamReader, StreamWriter => day8 I/O파트 코딩 
+.write() => 버퍼에 내용 입력
+.read() => 파일을 읽어오는 작업
+.flush() => 버퍼에 저장된 내용을 출력하는 작업
+.close() => Stream과 버퍼의 연결을 끊는 작업
