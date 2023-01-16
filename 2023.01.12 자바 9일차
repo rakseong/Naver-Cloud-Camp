@@ -50,7 +50,7 @@ InputStream, OutputStream과 동작은 유사하지만 문자 단위로 데이�
 1. 단방향 model : 입력과 출력을 분리하여 한방향으로 진행된다는 특징을 가진다.
 2. FIFO : 제일 먼저 입력된 값은 버퍼에 FIFO형태로 
 3. IOBlock : 단방향 통신을 유지하도록 Input이 발생할 때 Output이 간섭하지 못하도록 막는 작업을 말한다.
-4. 
+4. 유연한 구조 : 다른 Class의 메서드르 사용하기 위해 Filter Stream 안에 Sink Stream을 파라미터로 가지게 하여 사용하는 방식으로 확장이 가능하다.
 
 **StreamReader, StreamWriter => day8 I/O파트 코딩 
 .write() => 버퍼에 내용 입력
