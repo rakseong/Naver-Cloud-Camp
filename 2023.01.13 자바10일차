@@ -1,1 +1,38 @@
-ㅁㄴㅇㅁㅇ
+자바 10일차
+
+용어 정리 및 수업 내용=====================================================================================================
+
+in-read : 키보드, 파일, 네트워크 => Data Source 
+
+out-write : 화면, 파일, 네트워크 => Data Target
+
+Sink Stream : Data를 직접 주고받는 단순한 입출력 ex) InputStream is = System.in -> is.read()
+
+Filter Stream : Sink Stream을 통해 들어온 Data 조작하는 스트림 -> InputStreamReader(new InputStream(is)) -> reader의 메서드, InputStream의 메서드 모두 사용 가능
+=> 유연한 구조
+
+serializable(marker interface) : class정보를 외부로 출력할 때 implements(구현)하는 인터페이스, 상속하는 Interface지만 오버라이딩할 메서드가 없음 
+
+ValueObject(VO) : Field, getter/setter만 가지고 있는 클래스, 클래스명을 ~VO로 표기(~Vo implements serializable => 외부로 클래스 형태로 정렬하여 데이터를 전송하기 위한 준비)
+
+Runnable : run함수를 가지고 있는 Interface로 Thread를 extends할 수 없는 상황에서 implements하여 사용
+
+Persistance Data : 휘발성이 아닌 영구적으로 저장되는 데이터, 보통 Database에 저장하여 사용하는 것이 효율이 좋다.
+
+SQL(Structed Quary Language) : RDBMS에서 사용되는 표준 쿼리문
+
+DBMS(DataBase Management System) : 데이터베이스를 손쉽게 조작 처리할 수 있도록 하는 시스템
+
+**Thread 
+O/S의 기본 프로그램 실행 단위가 Process라면 Process내부에 JRE의 기본 실행 단위를 Thread라고 한다. 
+Thread는 Thread Scheduling에 의해 순서대로 진행하지만 인간이 보기에 동시다발적으로 진행되는 것처럼 보이기 때문에 Multi-tasking이 가능한 것 처럼 보인다.
+Thread a 선언 => a.run() - Thread의 run함수를 호출 및 실행 => a.start() - 새로운 Thread를 생성하여 run함수를 실행
+프로세스의 발생 비용이 높은데 비해 Thread는 데이터간 공유, O/S의 자원도 공유하기 때문에 발생 비용도 적고 편리성이 높다.
+
+**Thread 사용 방법
+1. Thread를 extends하여 run함수 오버라이딩, Thread에 정의한 클래스의 인스턴스를 넣어 run메서드 사용
+2. Thread를 extends할 수 없을 때 Interface Runnable을 implements 받아 사용 but start()함수를 사용 못하기 때문에 B b = new B() , Thread t = new Thread(b); t.start()사용
+
+**동기화 문제
+공유된 자원을 사용, 수정할 때 다른 Thread의 Schedueing으로 인해 변경되거나 사용한 값이 저장 및 변경되지 않고 다른 Thread에 의해 변경되어 동기화가 이루어 지지 않는 상황
+syncronized를 사용해 문제를 해결할 수 있음.
