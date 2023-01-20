@@ -1,1 +1,32 @@
-asd
+**sql 연습
+
+1. 자신이 속한 부서의 평균연봉보다 많은 연봉을 받는 사원의 아이디, 부서아이디, 연봉, 부서의 평균연봉을 조회하는쿼리를 작성하시오.
+
+select e.employee_id 사원아이디, e.department_id 부서아이디, e.salary 연봉,
+	ROUND(salary_info.avgsalary) 부서평균연봉
+from employees e, (select AVG(salary) avgsalary,department_id dept_id  from employees group by department_id) salary_info
+where e.department_id = salary_info.dept_id AND e.salary>salary_info.avgsalary
+Order by salary_info.avgsalary DESC;
+
+2.employee 테이블에서 급여를 많이 받는 순서대로 조회했을 때 6~10번까지의 5명의 이름과 급여를 조회하는 쿼리를 작성하시오.
+
+select e.ranking RANKING, e.last LAST_NAME, e.first FIRST_NAME, e.sal SALARY
+from (select Rank()OVER(order by salary DESC) ranking
+	,last_name last
+	, first_name first
+	, salary sal
+	, employee_id id 
+	from employees Order by salary DESC) e, 
+	(select ROW_NUMBER()OVER(order by salary DESC) k, EMPLOYEE_ID id from employees) t
+where e.id = t.id AND t.k between 6 AND 10
+Order by e.sal DESC; 
+
+3. 직책이 Sales Manager인 사원들의 입사 년도와 입사년도별 평균 급여를 출력하시오. 출력 시 년도를 기준으로 오름차순 정렬하시오.
+
+select d.year 년도, TO_CHAR(AVG(e.salary),'999,999,999') 평균급여
+from employees e, jobs j, (select TO_CHAR(hire_date,'yyyy') year,employee_id id from employees) d
+where j.job_id = e.job_id AND e.employee_id = d.id AND j.job_title IN('Sales Manager')
+group by d.year
+order by d.year;
+
+4. 사원의 부서가 속한 도시가
